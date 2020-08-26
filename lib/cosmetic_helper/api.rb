@@ -1,17 +1,32 @@
-class Api
+class Api 
+  
+  URL = "http://makeup-api.herokuapp.com/api/v1/products.json"
+
   def self.get_brand(brand)
-    url = "http://makeup-api.herokuapp.com/api/v1/products.json?brand=#{brand}"
-
-    response = Net::HTTP.get(URI(url))
+    uri = URI.parse(URL)
+    response = Net::HTTP.get(uri)
     brand = JSON.parse(response){"brand"}
-    
-    brand.each do |brand_name|
-      
-    Makeup.new(brand: brand_name["brand"], product_type: brand_name["product_type"]) 
-
+    brand.collect do |brand_name|
+      brand_name.uniq{"brand"}
+    Makeup.new(brand: brand_name["brand"]) 
     #a tag dedicated to the brand chosen by user 
-     
-    end
-    binding.pry  
   end
+      binding.pry
+  end
+
+  def self.get_product_type(product_type)
+    uri = URI.parse(URL)
+    response = Net::HTTP.get(uri)
+    product_type = JSON.parse(response){"product_type"}
+    product_type.collect do |type|
+      type.uniq{"product_type"}
+    Makeup.new(product_type: type("product_type")) 
+  end 
+end 
+
+
+
+
+
+
 end

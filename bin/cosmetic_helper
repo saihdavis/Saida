@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require_relative "../lib/environment.rb"
-CosmeticHelper::Cli.new.run
+CosmeticHelper::Cli.new.call
 #cli.run
